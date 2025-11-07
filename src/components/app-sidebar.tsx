@@ -52,7 +52,7 @@ const data = {
     },
     {
       title: 'Projects',
-      url: '/projects',
+      url: '/project',
       icon: IconFolder,
     },
     {

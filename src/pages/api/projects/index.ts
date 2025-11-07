@@ -8,9 +8,12 @@ export default async function PROJECTS(req: NextApiRequest, res: NextApiResponse
     prisma.project
       .findMany({
         orderBy: { createdAt: 'desc' },
+        include: {
+          client: true,
+          projectManager: true,
+        },
       })
       .then((projects) => {
-        console.log('projects :>> ', projects);
         res.status(200).json(projects);
       })
       .catch((error) => {

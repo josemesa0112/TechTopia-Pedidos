@@ -36,6 +36,7 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { useProjects } from '@/hooks/useProjects';
+import { useRouter } from 'next/navigation';
 
 const data: Payment[] = [
   {
@@ -179,7 +180,7 @@ export const columns: ColumnDef<Payment>[] = [
     enableHiding: false,
     cell: ({ row }) => {
       const payment = row.original;
-
+      const router = useRouter();
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -194,7 +195,9 @@ export const columns: ColumnDef<Payment>[] = [
               Copy payment ID
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>View customer</DropdownMenuItem>
+            <DropdownMenuItem onClick={() => router.push(`/proyectos/${payment.id}`)}>
+              View customer
+            </DropdownMenuItem>
             <DropdownMenuItem>View payment details</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
@@ -208,9 +211,11 @@ export function DataTableDemo() {
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
+  const { projects, loading, error } = useProjects();
+  const router = useRouter();
 
   const table = useReactTable({
-    data,
+    data: projects,
     columns,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
@@ -228,9 +233,13 @@ export function DataTableDemo() {
     },
   });
 
-  const { projects, loading, error } = useProjects();
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
-  console.log('projects :>> ', projects);
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
 
   return (
     <div className='w-full'>
@@ -265,6 +274,13 @@ export function DataTableDemo() {
               })}
           </DropdownMenuContent>
         </DropdownMenu>
+        <Button
+          className='col-span-2 mx-7'
+          type='button'
+          onClick={() => router.push('/proyectos/crear')}
+        >
+          Crear Proyecto
+        </Button>
       </div>
       <div className='overflow-hidden rounded-md border'>
         <Table>
