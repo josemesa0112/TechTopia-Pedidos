@@ -1,4 +1,4 @@
-import DashboardLayout from "@/components/DashLayout"
+import DashboardLayout from "@/components/DashboardLayout"
 import { useEffect, useState } from "react"
 import { useRouter } from "next/router"
 
