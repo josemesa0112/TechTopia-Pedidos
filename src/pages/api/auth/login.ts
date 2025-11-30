@@ -1,7 +1,6 @@
 // pages/api/auth/login.ts
 import type { NextApiRequest, NextApiResponse } from "next"
 import { prisma } from "@/lib/prisma"
-import bcrypt from "bcryptjs"
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== "POST") {
@@ -21,9 +20,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       return res.status(401).json({ error: "Credenciales inválidas" })
     }
 
-    const isValid = await bcrypt.compare(password, user.password)
-
-    if (!isValid) {
+    // Comparación directa sin bcrypt
+    if (password !== user.password) {
       return res.status(401).json({ error: "Credenciales inválidas" })
     }
 
