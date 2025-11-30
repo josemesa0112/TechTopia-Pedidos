@@ -1,4 +1,4 @@
-import DashboardLayout from "../../components/DashboardLayout"
+import DashboardLayout from "C:\Users\Jose Mesa\OneDrive\Escritorio\Proyecto Analisis\baseActualizada\src\components"
 import { useEffect, useState } from "react"
 import { useRouter } from "next/router"
 
