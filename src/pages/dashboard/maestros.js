@@ -1,4 +1,4 @@
-import DashboardLayout from "C:\Users\Jose Mesa\OneDrive\Escritorio\Proyecto Analisis\baseActualizada\src\components"
+import DashboardLayout from "@/components/DashboardLayout"
 import { useEffect, useState } from "react"
 
 export default function MaestrosPage() {
