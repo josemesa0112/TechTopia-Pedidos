@@ -5,6 +5,7 @@ export default function MaestrosPage() {
   const [maestros, setMaestros] = useState([])
   const [showModal, setShowModal] = useState(false)
   const [nombre, setNombre] = useState("")
+  const [saldo, setSaldo] = useState("")
   const [error, setError] = useState("")
   const [loading, setLoading] = useState(false)
 
@@ -44,7 +45,7 @@ export default function MaestrosPage() {
       const res = await fetch("/api/maestros/create", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ nombre: nombreTrim, creadorId: parsedUser.id })
+        body: JSON.stringify({ nombre: nombreTrim, saldo: parseInt(saldo, 10),creadorId: parsedUser.id })
       })
       const data = await res.json()
       if (!res.ok) throw new Error(data?.error || "No se pudo crear el maestro")
@@ -87,7 +88,7 @@ export default function MaestrosPage() {
             />
 
             <input
-              type="int"
+              type="number"
               value={saldo}
               onChange={(e) => setSaldo(e.target.value)}
               className="border p-2 mb-2 w-full"
