@@ -120,7 +120,6 @@ export default function MaestrosPage() {
             <th className="p-2 border">Nombre</th>
             <th className="p-2 border">Saldo</th>
             <th className="p-2 border">Creador</th>
-            <th className="p-2 border">Fecha</th>
           </tr>
         </thead>
         <tbody>
@@ -130,9 +129,6 @@ export default function MaestrosPage() {
               <td className="p-2 border">{m.nombre}</td>
               <td className="p-2 border">{m.saldo}</td>
               <td className="p-2 border">{m.creador?.email || "Sin datos"}</td>
-              <td className="p-2 border">
-                {m.createdAt ? new Date(m.createdAt).toLocaleDateString() : "-"}
-              </td>
             </tr>
           ))}
         </tbody>
