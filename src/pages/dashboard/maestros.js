@@ -86,6 +86,14 @@ export default function MaestrosPage() {
               placeholder="Nombre"
             />
 
+            <input
+              type="int"
+              value={saldo}
+              onChange={(e) => setSaldo(e.target.value)}
+              className="border p-2 mb-2 w-full"
+              placeholder="Saldo"
+            />
+
             <div className="flex justify-end gap-2">
               <button
                 onClick={() => setShowModal(false)}
