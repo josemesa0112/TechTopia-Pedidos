@@ -6,28 +6,53 @@ export default function MaestrosPage() {
   const [showModal, setShowModal] = useState(false)
   const [nombre, setNombre] = useState("")
   const [descripcion, setDescripcion] = useState("")
+  const [error, setError] = useState("")
+  const [loading, setLoading] = useState(false)
 
-  useEffect(() => {
-    const fetchMaestros = async () => {
+  const fetchMaestros = async () => {
+    try {
       const res = await fetch("/api/maestros")
       const data = await res.json()
+      if (!res.ok) throw new Error(data?.error || "Error al cargar maestros")
       setMaestros(data)
+    } catch (err) {
+      setError("No se pudo cargar la lista de maestros")
     }
+  }
+
+  useEffect(() => {
     fetchMaestros()
   }, [])
 
   const handleAddMaestro = async () => {
-    const res = await fetch("/api/maestros/create", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ nombre, descripcion })
-    })
-    const data = await res.json()
-    if (res.ok) {
+    const nombreTrim = nombre.trim()
+    const descripcionTrim = descripcion.trim()
+
+    if (!nombreTrim) {
+      setError("El nombre es obligatorio")
+      return
+    }
+
+    setLoading(true)
+    setError("")
+
+    try {
+      const res = await fetch("/api/maestros/create", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ nombre: nombreTrim, descripcion: descripcionTrim })
+      })
+      const data = await res.json()
+      if (!res.ok) throw new Error(data?.error || "No se pudo crear el maestro")
+
       setShowModal(false)
       setNombre("")
       setDescripcion("")
-      setMaestros([...maestros, data])
+      await fetchMaestros()
+    } catch (err) {
+      setError("Error al crear el maestro")
+    } finally {
+      setLoading(false)
     }
   }
 
@@ -41,6 +66,9 @@ export default function MaestrosPage() {
       >
         Agregar Maestro
       </button>
+
+      {error && <p className="text-red-600 mb-4">{error}</p>}
+      {loading && <p className="mb-4">Procesando...</p>}
 
       {showModal && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
@@ -96,7 +124,7 @@ export default function MaestrosPage() {
               <td className="p-2 border">{m.nombre}</td>
               <td className="p-2 border">{m.descripcion}</td>
               <td className="p-2 border">
-                {new Date(m.createdAt).toLocaleDateString()}
+                {m.createdAt ? new Date(m.createdAt).toLocaleDateString() : "-"}
               </td>
             </tr>
           ))}
@@ -105,3 +133,4 @@ export default function MaestrosPage() {
     </DashboardLayout>
   )
 }
+

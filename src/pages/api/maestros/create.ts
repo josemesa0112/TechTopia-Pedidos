@@ -1,19 +1,28 @@
-import { prisma } from "@/lib/prisma";
-import { NextApiRequest, NextApiResponse } from "next";
+import { prisma } from "@/lib/prisma"
+import { NextApiRequest, NextApiResponse } from "next"
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== "POST") {
-    return res.status(405).json({ error: "Method not allowed" });
+    return res.status(405).json({ error: "Método no permitido" })
   }
 
-  const { nombre, creadorId } = req.body;
+  const { nombre, descripcion, creadorId } = req.body
 
-  const maestro = await prisma.maestro.create({
-    data: {
-      nombre,
-      creadorId,
-    },
-  });
+  if (!nombre || nombre.trim() === "") {
+    return res.status(400).json({ error: "El nombre es obligatorio" })
+  }
 
-  res.status(201).json({ maestro });
+  try {
+    const maestro = await prisma.maestro.create({
+      data: {
+        nombre: nombre.trim(),
+        creadorId,
+      },
+    })
+    return res.status(201).json(maestro)
+  } catch (error) {
+    console.error("Error creando maestro:", error)
+    return res.status(500).json({ error: "No se pudo crear el maestro" })
+  }
 }
+
