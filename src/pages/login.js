@@ -1,11 +1,10 @@
-// pages/api/auth/login.ts
-import type { NextApiRequest, NextApiResponse } from "next"
+// pages/api/auth/login.js
 import { prisma } from "@/lib/prisma"
 import bcrypt from "bcryptjs"
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+export default async function handler(req, res) {
   if (req.method !== "POST") {
-    return res.status(405).json({ error: "Método no permitido" })
+    return res.status(405).json({ error: "Method not allowed" })
   }
 
   const { email, password } = req.body
@@ -21,9 +20,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       return res.status(401).json({ error: "Credenciales inválidas" })
     }
 
-    const isValid = await bcrypt.compare(password, user.password)
+    const validPass = await bcrypt.compare(password, user.password)
 
-    if (!isValid) {
+    if (!validPass) {
       return res.status(401).json({ error: "Credenciales inválidas" })
     }
 
@@ -36,9 +35,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         role: user.role,
       },
     })
-  } catch (err: any) {
+  } catch (err) {
     console.error("Error en login:", err)
     return res.status(500).json({ error: "Error interno del servidor" })
   }
 }
-
