@@ -14,7 +14,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   try {
-    const user = await prisma.user.findUnique({ where: { email } })
+    const emailClean = email.trim().toLowerCase()
+    
+    const user = await prisma.user.findUnique({ where: { email: emailClean } })
+
+    console.log("USUARIO ENCONTRADO:", user)
 
     if (!user) {
       return res.status(401).json({ error: "Credenciales inválidas" })
@@ -22,6 +26,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     // Comparación directa sin bcrypt
     if (password !== user.password) {
+      console.log("CONTRASEÑA ENVIADA:", password, "CONTRASEÑA EN BD:", user.password)
       return res.status(401).json({ error: "Credenciales inválidas" })
     }
 
@@ -39,3 +44,4 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return res.status(500).json({ error: "Error interno del servidor" })
   }
 }
+

@@ -18,12 +18,17 @@ export default function LoginPage() {
       const res = await fetch("/api/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({
+          email: email.trim(),       // 👈 limpiar espacios
+          password: password.trim(), // 👈 limpiar espacios
+        }),
       })
 
       const data = await res.json()
 
       if (res.status === 200) {
+        // Guardar usuario en localStorage para usarlo en el dashboard
+        localStorage.setItem("user", JSON.stringify(data.user))
         router.push("/dashboard")
       } else {
         setError(data.error || "Error en login")
@@ -61,4 +66,5 @@ export default function LoginPage() {
     </div>
   )
 }
+
 
