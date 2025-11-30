@@ -1,4 +1,4 @@
-import DashboardLayout from "@/components/DashboardLayout"
+import DashboardLayout from "@/components/ui/DashboardLayout"
 import { useEffect, useState } from "react"
 
 export default function MaestrosPage() {
