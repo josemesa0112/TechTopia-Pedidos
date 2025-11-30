@@ -5,7 +5,6 @@ export default function MaestrosPage() {
   const [maestros, setMaestros] = useState([])
   const [showModal, setShowModal] = useState(false)
   const [nombre, setNombre] = useState("")
-  const [descripcion, setDescripcion] = useState("")
   const [error, setError] = useState("")
   const [loading, setLoading] = useState(false)
 
@@ -26,8 +25,6 @@ export default function MaestrosPage() {
 
   const handleAddMaestro = async () => {
     const nombreTrim = nombre.trim()
-    const descripcionTrim = descripcion.trim()
-
     if (!nombreTrim) {
       setError("El nombre es obligatorio")
       return
@@ -40,14 +37,13 @@ export default function MaestrosPage() {
       const res = await fetch("/api/maestros/create", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ nombre: nombreTrim, descripcion: descripcionTrim })
+        body: JSON.stringify({ nombre: nombreTrim })
       })
       const data = await res.json()
       if (!res.ok) throw new Error(data?.error || "No se pudo crear el maestro")
 
       setShowModal(false)
       setNombre("")
-      setDescripcion("")
       await fetchMaestros()
     } catch (err) {
       setError("Error al crear el maestro")
@@ -83,13 +79,6 @@ export default function MaestrosPage() {
               placeholder="Nombre"
             />
 
-            <textarea
-              value={descripcion}
-              onChange={(e) => setDescripcion(e.target.value)}
-              className="border p-2 mb-2 w-full"
-              placeholder="Descripción"
-            />
-
             <div className="flex justify-end gap-2">
               <button
                 onClick={() => setShowModal(false)}
@@ -113,7 +102,6 @@ export default function MaestrosPage() {
           <tr className="bg-gray-200">
             <th className="p-2 border">ID</th>
             <th className="p-2 border">Nombre</th>
-            <th className="p-2 border">Descripción</th>
             <th className="p-2 border">Fecha</th>
           </tr>
         </thead>
@@ -122,7 +110,6 @@ export default function MaestrosPage() {
             <tr key={m.id}>
               <td className="p-2 border">{m.id}</td>
               <td className="p-2 border">{m.nombre}</td>
-              <td className="p-2 border">{m.descripcion}</td>
               <td className="p-2 border">
                 {m.createdAt ? new Date(m.createdAt).toLocaleDateString() : "-"}
               </td>
@@ -133,4 +120,3 @@ export default function MaestrosPage() {
     </DashboardLayout>
   )
 }
-
