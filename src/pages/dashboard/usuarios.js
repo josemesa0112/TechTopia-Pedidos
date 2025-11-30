@@ -5,6 +5,10 @@ import { useRouter } from "next/router"
 export default function UsuariosPage() {
   const [usuarios, setUsuarios] = useState([])
   const [user, setUser] = useState(null)
+  const [showModal, setShowModal] = useState(false)
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  const [role, setRole] = useState("USER")
   const router = useRouter()
 
   useEffect(() => {
@@ -35,11 +39,26 @@ export default function UsuariosPage() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ id, role: newRole })
     })
-    const data = await res.json()
     if (res.ok) {
       setUsuarios(
         usuarios.map((u) => (u.id === id ? { ...u, role: newRole } : u))
       )
+    }
+  }
+
+  const handleAddUsuario = async () => {
+    const res = await fetch("/api/usuarios/create", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password, role })
+    })
+    const data = await res.json()
+    if (res.ok) {
+      setUsuarios([...usuarios, data])
+      setShowModal(false)
+      setEmail("")
+      setPassword("")
+      setRole("USER")
     }
   }
 
@@ -48,6 +67,63 @@ export default function UsuariosPage() {
   return (
     <DashboardLayout>
       <h1 className="text-2xl font-bold mb-4">Usuarios</h1>
+
+      <button
+        onClick={() => setShowModal(true)}
+        className="mb-4 bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
+      >
+        Agregar Usuario
+      </button>
+
+      {showModal && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+          <div className="bg-white p-6 rounded shadow-md w-96">
+            <h2 className="text-xl font-bold mb-4">Agregar Usuario</h2>
+
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="border p-2 mb-2 w-full"
+              placeholder="Email"
+              required
+            />
+
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="border p-2 mb-2 w-full"
+              placeholder="Contraseña"
+              required
+            />
+
+            <select
+              value={role}
+              onChange={(e) => setRole(e.target.value)}
+              className="border p-2 mb-2 w-full"
+            >
+              <option value="USER">USER</option>
+              <option value="ADMIN">ADMIN</option>
+            </select>
+
+            <div className="flex justify-end gap-2">
+              <button
+                onClick={() => setShowModal(false)}
+                className="bg-gray-400 text-white px-4 py-2 rounded"
+              >
+                Cancelar
+              </button>
+              <button
+                onClick={handleAddUsuario}
+                className="bg-blue-600 text-white px-4 py-2 rounded"
+              >
+                Crear
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       <table className="w-full border">
         <thead>
@@ -88,3 +164,4 @@ export default function UsuariosPage() {
     </DashboardLayout>
   )
 }
+
