@@ -30,7 +30,6 @@ export default function MaestrosPage() {
       return
     }
 
-    // Obtener usuario logueado desde localStorage
     const storedUser = localStorage.getItem("user")
     const parsedUser = storedUser ? JSON.parse(storedUser) : null
     if (!parsedUser || !parsedUser.id) {
@@ -110,6 +109,8 @@ export default function MaestrosPage() {
           <tr className="bg-gray-200">
             <th className="p-2 border">ID</th>
             <th className="p-2 border">Nombre</th>
+            <th className="p-2 border">Saldo</th>
+            <th className="p-2 border">Creador</th>
             <th className="p-2 border">Fecha</th>
           </tr>
         </thead>
@@ -118,6 +119,8 @@ export default function MaestrosPage() {
             <tr key={m.id}>
               <td className="p-2 border">{m.id}</td>
               <td className="p-2 border">{m.nombre}</td>
+              <td className="p-2 border">{m.saldo}</td>
+              <td className="p-2 border">{m.creador?.email || "Sin datos"}</td>
               <td className="p-2 border">
                 {m.createdAt ? new Date(m.createdAt).toLocaleDateString() : "-"}
               </td>
@@ -128,3 +131,4 @@ export default function MaestrosPage() {
     </DashboardLayout>
   )
 }
+
