@@ -30,6 +30,14 @@ export default function MaestrosPage() {
       return
     }
 
+    // Obtener usuario logueado desde localStorage
+    const storedUser = localStorage.getItem("user")
+    const parsedUser = storedUser ? JSON.parse(storedUser) : null
+    if (!parsedUser || !parsedUser.id) {
+      setError("Debes estar logueado para crear un maestro")
+      return
+    }
+
     setLoading(true)
     setError("")
 
@@ -37,7 +45,7 @@ export default function MaestrosPage() {
       const res = await fetch("/api/maestros/create", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ nombre: nombreTrim })
+        body: JSON.stringify({ nombre: nombreTrim, creadorId: parsedUser.id })
       })
       const data = await res.json()
       if (!res.ok) throw new Error(data?.error || "No se pudo crear el maestro")
