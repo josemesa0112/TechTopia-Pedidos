@@ -1,8 +1,9 @@
-// pages/api/auth/login.js
+// pages/api/auth/login.ts
+import type { NextApiRequest, NextApiResponse } from "next"
 import { prisma } from "@/lib/prisma"
 import bcrypt from "bcryptjs"
 
-export default async function handler(req, res) {
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== "POST") {
     return res.status(405).json({ error: "Método no permitido" })
   }
@@ -35,7 +36,7 @@ export default async function handler(req, res) {
         role: user.role,
       },
     })
-  } catch (err) {
+  } catch (err: any) {
     console.error("Error en login:", err)
     return res.status(500).json({ error: "Error interno del servidor" })
   }

@@ -1,4 +1,4 @@
-// pages/login.js
+// pages/login.tsx
 import { useState } from "react"
 import { useRouter } from "next/router"
 
@@ -9,7 +9,7 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false)
   const router = useRouter()
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setLoading(true)
     setError("")
@@ -61,3 +61,4 @@ export default function LoginPage() {
     </div>
   )
 }
+
