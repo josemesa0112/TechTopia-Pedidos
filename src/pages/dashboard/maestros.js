@@ -1,5 +1,6 @@
 import DashboardLayout from "@/components/ui/DashboardLayout"
 import { useEffect, useState } from "react"
+import toast, { Toaster } from "react-hot-toast"
 
 export default function MaestrosPage() {
   const [maestros, setMaestros] = useState([])
@@ -23,13 +24,11 @@ export default function MaestrosPage() {
 
   useEffect(() => {
     fetchMaestros()
-
     const storedUser = localStorage.getItem("user")
     if (storedUser) {
-        setUser(JSON.parse(storedUser))
-        }
-    }, [])
-
+      setUser(JSON.parse(storedUser))
+    }
+  }, [])
 
   const handleAddMaestro = async () => {
     const nombreTrim = nombre.trim()
@@ -52,16 +51,22 @@ export default function MaestrosPage() {
       const res = await fetch("/api/maestros/create", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ nombre: nombreTrim, saldo: parseInt(saldo, 10),creadorId: parsedUser.id })
+        body: JSON.stringify({
+          nombre: nombreTrim,
+          saldo: parseInt(saldo, 10),
+          creadorId: parsedUser.id,
+        }),
       })
       const data = await res.json()
       if (!res.ok) throw new Error(data?.error || "No se pudo crear el maestro")
 
       setShowModal(false)
       setNombre("")
+      setSaldo("")
       await fetchMaestros()
+      toast.success("Maestro creado con éxito 🎉")
     } catch (err) {
-      setError("Error al crear el maestro")
+      toast.error("Error al crear el maestro")
     } finally {
       setLoading(false)
     }
@@ -69,29 +74,31 @@ export default function MaestrosPage() {
 
   return (
     <DashboardLayout>
+      <Toaster position="top-right" /> {/* 👈 Toasts visibles en la esquina */}
       <h1 className="text-2xl font-bold mb-4">Maestros</h1>
 
-    {user?.role == "ADMIN" &&(    
-      <button
-        onClick={() => setShowModal(true)}
-        className="mb-4 bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
-      >
-        Agregar Maestro
-      </button>)}
+      {user?.role === "ADMIN" && (
+        <button
+          onClick={() => setShowModal(true)}
+          className="mb-4 bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition"
+        >
+          Agregar Maestro
+        </button>
+      )}
 
       {error && <p className="text-red-600 mb-4">{error}</p>}
       {loading && <p className="mb-4">Procesando...</p>}
 
       {showModal && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-          <div className="bg-white p-6 rounded shadow-md w-96">
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50 transition">
+          <div className="bg-white p-6 rounded shadow-md w-96 transform scale-95 transition">
             <h2 className="text-xl font-bold mb-4">Agregar Maestro</h2>
 
             <input
               type="text"
               value={nombre}
               onChange={(e) => setNombre(e.target.value)}
-              className="border p-2 mb-2 w-full"
+              className="border p-2 mb-2 w-full rounded focus:ring-2 focus:ring-blue-400"
               placeholder="Nombre"
             />
 
@@ -99,29 +106,34 @@ export default function MaestrosPage() {
               type="number"
               value={saldo}
               onChange={(e) => setSaldo(e.target.value)}
-              className="border p-2 mb-2 w-full"
+              className="border p-2 mb-2 w-full rounded focus:ring-2 focus:ring-purple-400"
               placeholder="Saldo"
             />
 
             <div className="flex justify-end gap-2">
               <button
                 onClick={() => setShowModal(false)}
-                className="bg-gray-400 text-white px-4 py-2 rounded"
+                className="bg-gray-400 text-white px-4 py-2 rounded hover:bg-gray-500 transition"
               >
                 Cancelar
               </button>
               <button
                 onClick={handleAddMaestro}
-                className="bg-blue-600 text-white px-4 py-2 rounded"
+                disabled={loading}
+                className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition flex items-center justify-center"
               >
-                Crear
+                {loading ? (
+                  <span className="loader border-2 border-t-2 border-white rounded-full w-5 h-5 animate-spin"></span>
+                ) : (
+                  "Crear"
+                )}
               </button>
             </div>
           </div>
         </div>
       )}
 
-      <table className="w-full border">
+      <table className="w-full border rounded overflow-hidden">
         <thead>
           <tr className="bg-gray-200">
             <th className="p-2 border">ID</th>
@@ -132,7 +144,10 @@ export default function MaestrosPage() {
         </thead>
         <tbody>
           {maestros.map((m) => (
-            <tr key={m.id}>
+            <tr
+              key={m.id}
+              className="hover:bg-gray-100 transition"
+            >
               <td className="p-2 border">{m.id}</td>
               <td className="p-2 border">{m.nombre}</td>
               <td className="p-2 border">{m.saldo}</td>
