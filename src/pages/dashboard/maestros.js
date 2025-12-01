@@ -8,6 +8,7 @@ export default function MaestrosPage() {
   const [saldo, setSaldo] = useState("")
   const [error, setError] = useState("")
   const [loading, setLoading] = useState(false)
+  const [user, setUser] = useState(null)
 
   const fetchMaestros = async () => {
     try {
