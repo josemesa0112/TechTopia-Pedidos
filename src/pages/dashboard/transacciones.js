@@ -1,4 +1,4 @@
-import Layout from "@/components/organisms/Layout"
+import Layout from "@/components/Organisms/Layout"
 import { useEffect, useState } from "react"
 import toast, { Toaster } from "react-hot-toast"
 
