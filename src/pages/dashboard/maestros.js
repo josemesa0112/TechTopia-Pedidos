@@ -65,7 +65,7 @@ export default function MaestrosPage() {
     <DashboardLayout>
       <h1 className="text-2xl font-bold mb-4">Maestros</h1>
 
-    {user?.role == "ADMIN" &&(    
+    {user?.role == ADMIN &&(    
       <button
         onClick={() => setShowModal(true)}
         className="mb-4 bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
