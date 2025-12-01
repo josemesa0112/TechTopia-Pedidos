@@ -1,4 +1,4 @@
-import DashboardLayout from "@/components/ui/DashboardLayout"
+import Layout from "@/components/ui/layout"
 import { useEffect, useState } from "react"
 import toast, { Toaster } from "react-hot-toast"
 
@@ -73,8 +73,8 @@ export default function MaestrosPage() {
   }
 
   return (
-    <DashboardLayout>
-      <Toaster position="top-right" /> {/* 👈 Toasts visibles en la esquina */}
+    <Layout>
+      <Toaster position="top-right" /> {/* 👈 Toasts visibles */}
       <h1 className="text-2xl font-bold mb-4">Maestros</h1>
 
       {user?.role === "ADMIN" && (
@@ -144,10 +144,7 @@ export default function MaestrosPage() {
         </thead>
         <tbody>
           {maestros.map((m) => (
-            <tr
-              key={m.id}
-              className="hover:bg-gray-100 transition"
-            >
+            <tr key={m.id} className="hover:bg-gray-100 transition">
               <td className="p-2 border">{m.id}</td>
               <td className="p-2 border">{m.nombre}</td>
               <td className="p-2 border">{m.saldo}</td>
@@ -156,7 +153,8 @@ export default function MaestrosPage() {
           ))}
         </tbody>
       </table>
-    </DashboardLayout>
+    </Layout>
   )
 }
+
 

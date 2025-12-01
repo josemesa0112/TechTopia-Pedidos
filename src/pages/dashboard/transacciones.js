@@ -1,4 +1,4 @@
-import DashboardLayout from "@/components/ui/DashboardLayout"
+import Layout from "@/components/ui/layout"
 import { useEffect, useState } from "react"
 import toast, { Toaster } from "react-hot-toast"
 
@@ -70,7 +70,7 @@ export default function TransaccionesPage() {
   }
 
   return (
-    <DashboardLayout>
+    <Layout>
       <Toaster position="top-right" /> {/* 👈 Toasts visibles */}
       <h1 className="text-2xl font-bold mb-4">Transacciones</h1>
 
@@ -142,6 +142,7 @@ export default function TransaccionesPage() {
           ))}
         </tbody>
       </table>
-    </DashboardLayout>
+    </Layout>
   )
 }
+

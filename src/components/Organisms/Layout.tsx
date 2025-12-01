@@ -1,20 +1,37 @@
-import { AppSidebar } from '@/components/app-sidebar';
-import { Separator } from '@/components/ui/separator';
-import { SidebarInset, SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
+import { AppSidebar } from "@/components/app-sidebar"
+import { Separator } from "@/components/ui/separator"
+import {
+  SidebarInset,
+  SidebarProvider,
+  SidebarTrigger,
+} from "@/components/ui/sidebar"
 
-export default function Index({ children }: { children: React.ReactNode }) {
+export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <SidebarProvider>
+      {/* Sidebar reutilizado pero con tus rutas y usuario dinámico */}
       <AppSidebar />
+
+      {/* Contenedor principal */}
       <SidebarInset>
-        <header className='flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12'>
-          <div className='flex items-center gap-2 px-4'>
-            <SidebarTrigger className='-ml-1' />
-            <Separator orientation='vertical' className='mr-2 data-[orientation=vertical]:h-4' />
+        {/* Header superior */}
+        <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
+          <div className="flex items-center gap-2 px-4">
+            <SidebarTrigger className="-ml-1" />
+            <Separator
+              orientation="vertical"
+              className="mr-2 data-[orientation=vertical]:h-4"
+            />
+            <h1 className="text-lg font-semibold text-gray-700">Panel</h1>
           </div>
         </header>
-        <div className='flex flex-1 flex-col gap-4 p-4 pt-0'>{children}</div>
+
+        {/* Contenido dinámico */}
+        <div className="flex flex-1 flex-col gap-4 p-4 pt-0 bg-gray-50">
+          {children}
+        </div>
       </SidebarInset>
     </SidebarProvider>
-  );
+  )
 }
+

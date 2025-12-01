@@ -1,4 +1,4 @@
-import DashboardLayout from "@/components/ui/DashboardLayout"
+import Layout from "@/components/organisms/Layout"
 import { useEffect, useState } from "react"
 import { useRouter } from "next/router"
 import toast, { Toaster } from "react-hot-toast"
@@ -26,7 +26,7 @@ export default function UsuariosPage() {
         router.push("/dashboard")
       }
     }
-  }, [])
+  }, [router])
 
   useEffect(() => {
     const fetchUsuarios = async () => {
@@ -89,7 +89,7 @@ export default function UsuariosPage() {
   if (!user) return <p>Cargando...</p>
 
   return (
-    <DashboardLayout>
+    <Layout>
       <Toaster position="top-right" /> {/* 👈 Toasts visibles */}
       <h1 className="text-2xl font-bold mb-4">Usuarios</h1>
 
@@ -201,9 +201,10 @@ export default function UsuariosPage() {
           ))}
         </tbody>
       </table>
-    </DashboardLayout>
+    </Layout>
   )
 }
+
 
 
 
