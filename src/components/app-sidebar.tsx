@@ -34,7 +34,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 
     const fetchUsuarios = async () => {
       try {
-        const res = await fetch("/api/usuarios")
+        const res = await fetch("/api/dashboard/usuarios")
         const data = await res.json()
         setUsuariosCount(Array.isArray(data) ? data.length : 0)
       } catch {
@@ -44,7 +44,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 
     const fetchMaestros = async () => {
       try {
-        const res = await fetch("/api/maestros")
+        const res = await fetch("/api/dashboard/maestros")
         const data = await res.json()
         setMaestrosCount(Array.isArray(data) ? data.length : 0)
       } catch {
@@ -54,7 +54,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 
     const fetchTransacciones = async () => {
       try {
-        const res = await fetch("/api/transacciones")
+        const res = await fetch("/api/dashboard/transacciones")
         const data = await res.json()
         setTransaccionesCount(Array.isArray(data) ? data.length : 0)
       } catch {
