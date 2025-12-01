@@ -1,24 +1,13 @@
-import * as React from 'react';
+import * as React from "react"
 import {
-  IconCamera,
-  IconChartBar,
   IconDashboard,
-  IconDatabase,
-  IconFileAi,
-  IconFileDescription,
-  IconFileWord,
-  IconFolder,
-  IconHelp,
-  IconListDetails,
-  IconReport,
-  IconSearch,
-  IconSettings,
   IconUsers,
-} from '@tabler/icons-react';
+  IconDatabase,
+  IconChartBar,
+  IconReport,
+  IconLogout,
+} from "@tabler/icons-react"
 
-import { NavDocuments } from '@/components/nav-documents';
-import { NavMain } from '@/components/nav-main';
-import { NavUser } from '@/components/nav-user';
 import {
   Sidebar,
   SidebarContent,
@@ -26,142 +15,67 @@ import {
   SidebarHeader,
   SidebarMenu,
   SidebarMenuItem,
-} from '@/components/ui/sidebar';
+} from "@/components/ui/sidebar"
 
-const data = {
-  user: {
-    name: 'Miguel Angel',
-    email: 'Miguel@prdod.com',
-    avatar: '/avatars/shadcn.jpg',
-  },
-  navMain: [
-    {
-      title: 'Dashboard',
-      url: '/dashboard',
-      icon: IconDashboard,
-    },
-    {
-      title: 'Mis Tareas',
-      url: '/tasks',
-      icon: IconListDetails,
-    },
-    {
-      title: 'Notifications',
-      url: '/notifications',
-      icon: IconChartBar,
-    },
-    {
-      title: 'Projects',
-      url: '/project',
-      icon: IconFolder,
-    },
-    {
-      title: 'Team',
-      url: '/team',
-      icon: IconUsers,
-    },
-  ],
-  navClouds: [
-    {
-      title: 'Capture',
-      icon: IconCamera,
-      isActive: true,
-      url: '#',
-      items: [
-        {
-          title: 'Active Proposals',
-          url: '#',
-        },
-        {
-          title: 'Archived',
-          url: '#',
-        },
-      ],
-    },
-    {
-      title: 'Proposal',
-      icon: IconFileDescription,
-      url: '#',
-      items: [
-        {
-          title: 'Active Proposals',
-          url: '#',
-        },
-        {
-          title: 'Archived',
-          url: '#',
-        },
-      ],
-    },
-    {
-      title: 'Prompts',
-      icon: IconFileAi,
-      url: '#',
-      items: [
-        {
-          title: 'Active Proposals',
-          url: '#',
-        },
-        {
-          title: 'Archived',
-          url: '#',
-        },
-      ],
-    },
-  ],
-  navSecondary: [
-    {
-      title: 'Settings',
-      url: '#',
-      icon: IconSettings,
-    },
-    {
-      title: 'Get Help',
-      url: '#',
-      icon: IconHelp,
-    },
-    {
-      title: 'Search',
-      url: '#',
-      icon: IconSearch,
-    },
-  ],
-  documents: [
-    {
-      name: 'User Management',
-      url: '/users',
-      icon: IconDatabase,
-    },
-    {
-      name: 'Reports',
-      url: '/reports',
-      icon: IconReport,
-    },
-    {
-      name: 'Integrations',
-      url: '/integrations',
-      icon: IconFileWord,
-    },
-  ],
-};
+import { NavUser } from "@/components/nav-user"
+import { NavMain } from "@/components/nav-main"
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  const [user, setUser] = React.useState<any>(null)
+
+  React.useEffect(() => {
+    const storedUser = localStorage.getItem("user")
+    if (storedUser) {
+      setUser(JSON.parse(storedUser))
+    }
+  }, [])
+
+  const navMain = [
+    { title: "Dashboard", url: "/dashboard", icon: IconDashboard },
+    { title: "Usuarios", url: "/usuarios", icon: IconUsers },
+    { title: "Maestros", url: "/maestros", icon: IconDatabase },
+    { title: "Transacciones", url: "/transacciones", icon: IconChartBar },
+    { title: "Reportes", url: "/reportes", icon: IconReport },
+  ]
+
   return (
-    <Sidebar collapsible='offcanvas' {...props}>
+    <Sidebar collapsible="offcanvas" {...props}>
+      {/* Header con logo */}
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
-            <img src='/LOGOTAREAS.png' alt='Logo' />
+            <img src="/LOGOTAREAS.png" alt="Logo" className="h-10" />
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarHeader>
+
+      {/* Navegación principal */}
       <SidebarContent>
-        <NavMain items={data.navMain} />
-        <NavDocuments items={data.documents} />
+        <NavMain items={navMain} />
       </SidebarContent>
+
+      {/* Footer con usuario y logout */}
       <SidebarFooter>
-        <NavUser user={data.user} />
+        <div className="flex items-center justify-between w-full px-4">
+          <NavUser
+            user={{
+              name: user?.name || "Usuario",
+              email: user?.email || "",
+              avatar: "/avatar.png",
+            }}
+          />
+          <button
+            onClick={() => {
+              localStorage.removeItem("user")
+              window.location.href = "/login"
+            }}
+            title="Cerrar sesión"
+          >
+            <IconLogout className="w-6 h-6 text-red-500 hover:text-red-600 transition" />
+          </button>
+        </div>
       </SidebarFooter>
     </Sidebar>
-  );
+  )
 }
+
