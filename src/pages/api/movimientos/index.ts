@@ -13,7 +13,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         responsable: true,   // incluir datos del usuario responsable
       },
       orderBy: {
-        createdAt: "desc",   // opcional: ordena del más reciente al más antiguo
+        createdAt: "asc",   // opcional: ordena del más reciente al más antiguo
       },
     })
     console.log("Movimientos obtenidos:", movimientos)
