@@ -27,7 +27,7 @@ export default function TransaccionesPage() {
       alert("Debes seleccionar un Maestro primero")
       return
     }
-    const res = await fetch("/api/transacciones/create", {
+    const res = await fetch("/api/movimientos/create", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ maestroId: selectedMaestro, tipo, cantidad })
@@ -53,7 +53,7 @@ export default function TransaccionesPage() {
   useEffect(() => {
     if (!selectedMaestro) return
     const fetchMovimientos = async () => {
-      const res = await fetch(`/api/transacciones?maestroId=${selectedMaestro}`)
+      const res = await fetch(`/api/movimientos?maestroId=${selectedMaestro}`)
       const data = await res.json()
       setMovimientos(data)
     }
