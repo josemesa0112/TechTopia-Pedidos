@@ -7,15 +7,20 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   try {
-    const transacciones = await prisma.movimiento.findMany({
+    const movimientos = await prisma.movimiento.findMany({
       include: {
-        maestro: true,   // si tu modelo tiene relación con Maestro
+        maestro: true,       // incluir datos del maestro
+        responsable: true,   // incluir datos del usuario responsable
+      },
+      orderBy: {
+        createdAt: "desc",   // opcional: ordena del más reciente al más antiguo
       },
     })
-    console.log("Transacciones obtenidas:", transacciones)
-    return res.status(200).json(transacciones)
+    console.log("Movimientos obtenidos:", movimientos)
+    return res.status(200).json(movimientos)
   } catch (error) {
-    console.error("Error listando transacciones:", error)
-    return res.status(500).json({ error: "No se pudo obtener la lista de transacciones" })
+    console.error("Error listando movimientos:", error)
+    return res.status(500).json({ error: "No se pudo obtener la lista de movimientos" })
   }
 }
+

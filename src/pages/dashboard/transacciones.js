@@ -19,7 +19,7 @@ export default function TransaccionesPage() {
   const [selectedMaestro, setSelectedMaestro] = useState(null)
   const [movimientos, setMovimientos] = useState([])
   const [showModal, setShowModal] = useState(false)
-  const [tipo, setTipo] = useState("entrada")
+  const [tipo, setTipo] = useState("ENTRADA")
   const [cantidad, setCantidad] = useState(0)
 
   const handleAddMovimiento = async () => {
@@ -30,14 +30,14 @@ export default function TransaccionesPage() {
     const res = await fetch("/api/movimientos/create", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ maestroId: selectedMaestro, tipo, cantidad })
+      body: JSON.stringify({ maestroId: Number(selectedMaestro), tipo, cantidad, responsableId: 1 }) // 👈 ajusta responsableId según tu lógica
     })
     const data = await res.json()
     if (res.ok) {
       setShowModal(false)
       setCantidad(0)
-      setTipo("entrada")
-      setMovimientos([...movimientos, data])
+      setTipo("ENTRADA")
+      setMovimientos([...movimientos, data.movimiento])
     }
   }
 
@@ -61,11 +61,11 @@ export default function TransaccionesPage() {
   }, [selectedMaestro])
 
   const chartData = {
-    labels: movimientos.map(m => new Date(m.fecha).toLocaleDateString()),
+    labels: movimientos.map(m => new Date(m.createdAt).toLocaleDateString()),
     datasets: [
       {
-        label: "Saldo",
-        data: movimientos.map(m => m.saldo ?? m.cantidad),
+        label: "Cantidad",
+        data: movimientos.map(m => m.cantidad),
         borderColor: "blue",
         backgroundColor: "rgba(0,0,255,0.2)",
         tension: 0.3,
@@ -100,13 +100,13 @@ export default function TransaccionesPage() {
           <div className="bg-white p-6 rounded shadow-md w-96">
             <h2 className="text-xl font-bold mb-4">Agregar movimiento</h2>
             <select value={tipo} onChange={(e) => setTipo(e.target.value)} className="border p-2 mb-2 w-full">
-              <option value="entrada">Entrada</option>
-              <option value="salida">Salida</option>
+              <option value="ENTRADA">Entrada</option>
+              <option value="SALIDA">Salida</option>
             </select>
             <input
               type="number"
               value={cantidad}
-              onChange={(e) => setCantidad(e.target.value)}
+              onChange={(e) => setCantidad(Number(e.target.value))}
               className="border p-2 mb-2 w-full"
               placeholder="Cantidad"
             />
@@ -131,9 +131,9 @@ export default function TransaccionesPage() {
           {movimientos.map((mov) => (
             <tr key={mov.id}>
               <td className="p-2 border">{mov.id}</td>
-              <td className="p-2 border">{new Date(mov.fecha).toLocaleDateString()}</td>
+              <td className="p-2 border">{new Date(mov.createdAt).toLocaleDateString()}</td>
               <td className="p-2 border">{mov.cantidad}</td>
-              <td className="p-2 border">{mov.usuario?.name}</td>
+              <td className="p-2 border">{mov.responsable?.name || mov.responsable?.email}</td>
             </tr>
           ))}
         </tbody>
