@@ -71,20 +71,20 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     { title: "Dashboard", url: "/dashboard", icon: IconDashboard },
     {
       title: `Usuarios (${usuariosCount})`,
-      url: "/usuarios",
+      url: "/dashboard/usuarios",
       icon: IconUsers,
     },
     {
       title: `Maestros (${maestrosCount})`,
-      url: "/maestros",
+      url: "/dashboard/maestros",
       icon: IconDatabase,
     },
     {
       title: `Transacciones (${transaccionesCount})`,
-      url: "/transacciones",
+      url: "/dashboard/transacciones",
       icon: IconChartBar,
     },
-    { title: "Reportes", url: "/reportes", icon: IconReport },
+    { title: "Reportes", url: "/dashboard/reportes", icon: IconReport },
   ]
 
   return (
