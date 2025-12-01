@@ -20,10 +20,16 @@ export default function MaestrosPage() {
       setError("No se pudo cargar la lista de maestros")
     }
   }
-
+  
   useEffect(() => {
-    fetchMaestros()
-  }, [])
+  fetchMaestros()
+
+  const storedUser = localStorage.getItem("user")
+  if (storedUser) {
+    setUser(JSON.parse(storedUser))
+  }
+}, [])
+
 
   const handleAddMaestro = async () => {
     const nombreTrim = nombre.trim()
