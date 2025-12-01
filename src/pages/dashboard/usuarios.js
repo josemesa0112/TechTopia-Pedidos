@@ -50,12 +50,13 @@ export default function UsuariosPage() {
     const res = await fetch("/api/usuarios/create", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password, role })
+      body: JSON.stringify({ email, password, name, role })
     })
     const data = await res.json()
     if (res.ok) {
       setUsuarios([...usuarios, data])
       setShowModal(false)
+      setName("")
       setEmail("")
       setPassword("")
       setRole("USER")
@@ -79,6 +80,15 @@ export default function UsuariosPage() {
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
           <div className="bg-white p-6 rounded shadow-md w-96">
             <h2 className="text-xl font-bold mb-4">Agregar Usuario</h2>
+
+            <input
+              type="name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              className="border p-2 mb-2 w-full"
+              placeholder="Nombre"
+              required
+            />
 
             <input
               type="email"
