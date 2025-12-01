@@ -22,19 +22,68 @@ import { NavMain } from "@/components/nav-main"
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const [user, setUser] = React.useState<any>(null)
+  const [usuariosCount, setUsuariosCount] = React.useState<number>(0)
+  const [maestrosCount, setMaestrosCount] = React.useState<number>(0)
+  const [transaccionesCount, setTransaccionesCount] = React.useState<number>(0)
 
   React.useEffect(() => {
     const storedUser = localStorage.getItem("user")
     if (storedUser) {
       setUser(JSON.parse(storedUser))
     }
+
+    const fetchUsuarios = async () => {
+      try {
+        const res = await fetch("/api/usuarios")
+        const data = await res.json()
+        setUsuariosCount(Array.isArray(data) ? data.length : 0)
+      } catch {
+        setUsuariosCount(0)
+      }
+    }
+
+    const fetchMaestros = async () => {
+      try {
+        const res = await fetch("/api/maestros")
+        const data = await res.json()
+        setMaestrosCount(Array.isArray(data) ? data.length : 0)
+      } catch {
+        setMaestrosCount(0)
+      }
+    }
+
+    const fetchTransacciones = async () => {
+      try {
+        const res = await fetch("/api/transacciones")
+        const data = await res.json()
+        setTransaccionesCount(Array.isArray(data) ? data.length : 0)
+      } catch {
+        setTransaccionesCount(0)
+      }
+    }
+
+    fetchUsuarios()
+    fetchMaestros()
+    fetchTransacciones()
   }, [])
 
   const navMain = [
     { title: "Dashboard", url: "/dashboard", icon: IconDashboard },
-    { title: "Usuarios", url: "/usuarios", icon: IconUsers },
-    { title: "Maestros", url: "/maestros", icon: IconDatabase },
-    { title: "Transacciones", url: "/transacciones", icon: IconChartBar },
+    {
+      title: `Usuarios (${usuariosCount})`,
+      url: "/usuarios",
+      icon: IconUsers,
+    },
+    {
+      title: `Maestros (${maestrosCount})`,
+      url: "/maestros",
+      icon: IconDatabase,
+    },
+    {
+      title: `Transacciones (${transaccionesCount})`,
+      url: "/transacciones",
+      icon: IconChartBar,
+    },
     { title: "Reportes", url: "/reportes", icon: IconReport },
   ]
 
@@ -78,4 +127,3 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     </Sidebar>
   )
 }
-
