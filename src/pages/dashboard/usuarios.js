@@ -34,16 +34,19 @@ export default function UsuariosPage() {
     fetchUsuarios()
   }, [])
 
-  const handleChangeRole = async (id, newRole) => {
-    const res = await fetch("/api/usuarios/update", {
+  const handleChangeRole = async (userId, nuevoRol) => {
+    const res = await fetch("/api/usuarios/updateRol", {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ id, role: newRole })
+      body: JSON.stringify({ userId, nuevoRol })
     })
     if (res.ok) {
-      setUsuarios(
-        usuarios.map((u) => (u.id === id ? { ...u, role: newRole } : u))
+      const actualizado = await res.json()
+      setUsuarios((prev) =>
+        prev.map((u) => (u.id === actualizado.id ? actualizado : u))
       )
+    } else {
+      alert("Error al cambiar el rol")
     }
   }
 
@@ -175,4 +178,5 @@ export default function UsuariosPage() {
     </DashboardLayout>
   )
 }
+
 
