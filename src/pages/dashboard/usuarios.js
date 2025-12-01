@@ -8,6 +8,7 @@ export default function UsuariosPage() {
   const [showModal, setShowModal] = useState(false)
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
+  const [name, setName] = useState("")
   const [role, setRole] = useState("USER")
   const router = useRouter()
 
