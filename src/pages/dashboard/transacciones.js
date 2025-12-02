@@ -17,14 +17,14 @@ ChartJS.register(LineElement, CategoryScale, LinearScale, PointElement, Title, T
 
 export default function TransaccionesPage() {
   const [maestros, setMaestros] = useState([])
-  const [selectedMaestro, setSelectedMaestro] = useState<string | null>(null)
+  const [selectedMaestro, setSelectedMaestro] = useState(null)
   const [movimientos, setMovimientos] = useState([])
   const [showModal, setShowModal] = useState(false)
   const [tipo, setTipo] = useState("ENTRADA")
-  const [cantidad, setCantidad] = useState<number>(0)
+  const [cantidad, setCantidad] = useState(0)
   const [error, setError] = useState("")
   const [loading, setLoading] = useState(false)
-  const [user, setUser] = useState<any>(null)
+  const [user, setUser] = useState(null)
 
   // Fetch maestros
   useEffect(() => {
