@@ -1,4 +1,4 @@
-import DashboardLayout from "@/components/Organisms/Layout"
+import Layout from "@/components/Organisms/Layout"
 import { useEffect, useState } from "react"
 import { Line } from "react-chartjs-2"
 import {
