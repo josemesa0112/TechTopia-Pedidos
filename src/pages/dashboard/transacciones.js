@@ -12,7 +12,7 @@ export default function TransaccionesPage() {
 
   const fetchTransacciones = async () => {
     try {
-      const res = await fetch("/api/transacciones")
+      const res = await fetch("/api/movimientos")
       const data = await res.json()
       if (!res.ok) throw new Error(data?.error || "Error al cargar transacciones")
       setTransacciones(data)
@@ -47,7 +47,7 @@ export default function TransaccionesPage() {
     setError("")
 
     try {
-      const res = await fetch("/api/transacciones/create", {
+      const res = await fetch("/api/movimientos/create", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
