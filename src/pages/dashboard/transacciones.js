@@ -12,7 +12,6 @@ import {
   Legend
 } from "chart.js"
 import toast, { Toaster } from "react-hot-toast"
-import { Layout } from "lucide-react"
 
 ChartJS.register(LineElement, CategoryScale, LinearScale, PointElement, Title, Tooltip, Legend)
 
