@@ -1,13 +1,14 @@
-import React, { useEffect, useMemo, useState } from 'react'
-import toast, { Toaster } from 'react-hot-toast'
-import ProductFilters from '@/components/products/ProductFilters'
-import ProductCard from '@/components/products/ProductCard'
-import Layout from "@/components/Organisms/Layout"
+import React, { useEffect, useMemo, useState } from "react"
+import toast, { Toaster } from "react-hot-toast"
+import ProductFilters from "@/components/products/ProductFilters"
+import ProductCard from "@/components/products/ProductCard"
+import DashboardLayout from "@/components/ui/DashboardLayout"
+import { addToCart } from "@/utils/cart" // 👈 integración con carrito
 
 export default function ProductosPage() {
   const [productos, setProductos] = useState([])
-  const [busqueda, setBusqueda] = useState('')
-  const [orden, setOrden] = useState('relevancia') // relevancia | precio-asc | precio-desc | rating
+  const [busqueda, setBusqueda] = useState("")
+  const [orden, setOrden] = useState("relevancia") // relevancia | precio-asc | precio-desc | rating
   const [filtros, setFiltros] = useState({
     categorias: [],
     min: 0,
@@ -18,11 +19,11 @@ export default function ProductosPage() {
   useEffect(() => {
     const fetchProductos = async () => {
       try {
-        const res = await fetch('/api/productos')
+        const res = await fetch("/api/productos")
         const data = await res.json()
         setProductos(Array.isArray(data) ? data : [])
       } catch {
-        toast.error('Error al cargar productos')
+        toast.error("Error al cargar productos")
       }
     }
     fetchProductos()
@@ -58,30 +59,30 @@ export default function ProductosPage() {
 
     // Orden
     switch (orden) {
-      case 'precio-asc':
+      case "precio-asc":
         list.sort((a, b) => a.precio - b.precio)
         break
-      case 'precio-desc':
+      case "precio-desc":
         list.sort((a, b) => b.precio - a.precio)
         break
-      case 'rating':
+      case "rating":
         list.sort((a, b) => b.rating - a.rating)
         break
       default:
-        // relevancia: sin cambios
         break
     }
 
     return list
   }, [productos, busqueda, filtros, orden])
 
+  // 👇 Aquí conectamos el botón con el carrito
   const handleAddToCart = (product) => {
+    addToCart(product)
     toast.success(`"${product.nombre}" agregado al carrito`)
-    // Aquí podrías persistir en localStorage o contexto si lo deseas
   }
 
   return (
-    <Layout>
+    <DashboardLayout>
       <Toaster position="top-right" />
       <div className="flex items-center justify-between mb-4">
         <h1 className="text-2xl font-bold text-gray-800">Catálogo de Productos</h1>
@@ -122,6 +123,15 @@ export default function ProductosPage() {
           )}
         </div>
       </div>
-    </Layout>
+
+      {/* Botón flotante para acceder rápido al carrito */}
+      <a
+        href="/dashboard/carrito"
+        className="fixed bottom-6 right-6 bg-blue-600 text-white px-4 py-3 rounded-full shadow-lg hover:bg-blue-700 transition"
+      >
+        🛒 Ver Carrito
+      </a>
+    </DashboardLayout>
   )
 }
+
