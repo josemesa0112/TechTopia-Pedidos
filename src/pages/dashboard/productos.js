@@ -2,9 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react'
 import toast, { Toaster } from 'react-hot-toast'
 import ProductFilters from '@/components/products/ProductFilters'
 import ProductCard from '@/components/products/ProductCard'
-// Usa el layout que ya tengas. Si en _app.tsx envolviste con Layout global, NO envuelvas aquí otra vez.
-// Si usas DashboardLayout por página:
-import DashboardLayout from "@/components/Organisms/Layout"
+import Layout from "@/components/Organisms/Layout"
 
 export default function ProductosPage() {
   const [productos, setProductos] = useState([])
