@@ -92,7 +92,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
-            <img src="/TechTopia.png" alt="Logo" className="h-100" />
+            <img src="/TechTopia.png" alt="Logo" className="h-50" />
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarHeader>
