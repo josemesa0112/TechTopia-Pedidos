@@ -71,7 +71,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const navMain = [
     { title: "Menu principal", url: "/dashboard", icon: IconDashboard },
     {
-      title: `Empleados (${usuariosCount})`,
+      title: `Usuarios (${usuariosCount})`,
       url: "/dashboard/usuarios",
       icon: IconUsers,
     },
