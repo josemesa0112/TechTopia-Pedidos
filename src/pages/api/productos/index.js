@@ -1,0 +1,66 @@
+export default function handler(req, res) {
+  const productos = [
+    {
+      id: 1,
+      nombre: 'Laptop Pro 15"',
+      categoria: 'Electrónica',
+      rating: 4.5,
+      reviews: 125,
+      precio: 1299.99,
+      precioAnterior: 1499.99,
+      inStock: true,
+    },
+    {
+      id: 2,
+      nombre: 'Teclado Mecánico RGB',
+      categoria: 'Accesorios',
+      rating: 4.2,
+      reviews: 230,
+      precio: 89.99,
+      precioAnterior: 129.99,
+      inStock: true,
+    },
+    {
+      id: 3,
+      nombre: 'Monitor 27" 4K UHD',
+      categoria: 'Electrónica',
+      rating: 4.6,
+      reviews: 98,
+      precio: 449.99,
+      precioAnterior: 599.99,
+      inStock: false,
+    },
+    {
+      id: 4,
+      nombre: 'Tablet 10" 128GB',
+      categoria: 'Electrónica',
+      rating: 4.4,
+      reviews: 187,
+      precio: 329.99,
+      precioAnterior: 399.99,
+      inStock: true,
+    },
+    {
+      id: 5,
+      nombre: 'Escritorio Elevable Eléctrico',
+      categoria: 'Muebles',
+      rating: 4.7,
+      reviews: 64,
+      precio: 499.99,
+      precioAnterior: 599.99,
+      inStock: true,
+    },
+    {
+      id: 6,
+      nombre: 'Mouse Inalámbrico Ergonómico',
+      categoria: 'Accesorios',
+      rating: 4.3,
+      reviews: 150,
+      precio: 34.99,
+      precioAnterior: 49.99,
+      inStock: true,
+    },
+  ]
+
+  res.status(200).json(productos)
+}

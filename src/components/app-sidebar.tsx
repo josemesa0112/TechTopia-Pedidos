@@ -70,21 +70,21 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const navMain = [
     { title: "Dashboard", url: "/dashboard", icon: IconDashboard },
     {
-      title: `Usuarios (${usuariosCount})`,
+      title: `Empleados (${usuariosCount})`,
       url: "/dashboard/usuarios",
       icon: IconUsers,
     },
     {
-      title: `Maestros (${maestrosCount})`,
+      title: `Clientes (${maestrosCount})`,
       url: "/dashboard/maestros",
       icon: IconDatabase,
     },
     {
-      title: `Transacciones (${transaccionesCount})`,
+      title: `Compras (${transaccionesCount})`,
       url: "/dashboard/transacciones",
       icon: IconChartBar,
     },
-    { title: "Reportes", url: "/dashboard/reportes", icon: IconReport },
+    { title: "Productos", url: "/dashboard/productos", icon: IconDatabase },
   ]
 
   return (
