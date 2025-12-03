@@ -29,7 +29,6 @@ export default function CartSummary({ productos }) {
       </div>
 
       <div className="mt-6 flex flex-col gap-3">
-        {/* ✅ Botón corregido: redirige a checkout */}
         <a
           href="/dashboard/checkout"
           className="block w-full bg-green-600 text-white py-2 rounded text-center hover:bg-green-700 transition"
