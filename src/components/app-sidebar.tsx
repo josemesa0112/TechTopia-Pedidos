@@ -68,7 +68,6 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   }, [])
 
   const navMain = [
-    { title: "Dashboard", url: "/dashboard", icon: IconDashboard },
     {
       title: `Empleados (${usuariosCount})`,
       url: "/dashboard/usuarios",
@@ -93,7 +92,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
-            <img src="/LOGOTAREAS.png" alt="Logo" className="h-10" />
+            <img src="/TechTopia.png" alt="Logo" className="h-100" />
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarHeader>
