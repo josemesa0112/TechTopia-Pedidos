@@ -6,6 +6,7 @@ import {
   IconChartBar,
   IconReport,
   IconLogout,
+  IconShoppingCart,
 } from "@tabler/icons-react"
 
 import {
@@ -85,6 +86,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       icon: IconChartBar,
     },
     { title: "Productos", url: "/dashboard/productos", icon: IconDatabase },
+    { title: "Carrito", url: "/dashboard/carrito", icon: IconShoppingCart },
   ]
 
   return (
@@ -127,3 +129,4 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     </Sidebar>
   )
 }
+
