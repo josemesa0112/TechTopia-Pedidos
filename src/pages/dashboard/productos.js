@@ -2,8 +2,8 @@ import React, { useEffect, useMemo, useState } from "react"
 import toast, { Toaster } from "react-hot-toast"
 import ProductFilters from "@/components/products/ProductFilters"
 import ProductCard from "@/components/products/ProductCard"
-import DashboardLayout from "@/components/ui/DashboardLayout"
-import { addToCart } from "@/utils/cart" // 👈 integración con carrito
+import Layout from "@/components/Organisms/Layout"
+import { addToCart } from "@/utils/cart"
 
 export default function ProductosPage() {
   const [productos, setProductos] = useState([])
@@ -75,14 +75,13 @@ export default function ProductosPage() {
     return list
   }, [productos, busqueda, filtros, orden])
 
-  // 👇 Aquí conectamos el botón con el carrito
   const handleAddToCart = (product) => {
     addToCart(product)
     toast.success(`"${product.nombre}" agregado al carrito`)
   }
 
   return (
-    <DashboardLayout>
+    <Layout>
       <Toaster position="top-right" />
       <div className="flex items-center justify-between mb-4">
         <h1 className="text-2xl font-bold text-gray-800">Catálogo de Productos</h1>
@@ -131,7 +130,7 @@ export default function ProductosPage() {
       >
         🛒 Ver Carrito
       </a>
-    </DashboardLayout>
+    </Layout>
   )
 }
 
