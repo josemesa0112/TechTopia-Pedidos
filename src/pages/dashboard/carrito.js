@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import CartItem from "@/components/cart/CartItem"
 import CartSummary from "@/components/cart/CartSummary"
 import { getCart, removeFromCart } from "@/utils/cart"
-import DashboardLayout from "@/components/ui/DashboardLayout"
+import Layout from "@/components/Organisms/Layout"
 
 export default function CarritoPage() {
   const [productos, setProductos] = useState([])
@@ -17,7 +17,7 @@ export default function CarritoPage() {
   }
 
   return (
-    <DashboardLayout>
+    <Layout>
       <h1 className="text-2xl font-bold mb-6">Carrito de Compras</h1>
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2 bg-white rounded-lg shadow-md p-6">
@@ -31,6 +31,6 @@ export default function CarritoPage() {
         </div>
         <CartSummary productos={productos} />
       </div>
-    </DashboardLayout>
+    </Layout>
   )
 }
