@@ -3,7 +3,7 @@ import { useRouter } from "next/router"
 import toast from "react-hot-toast"
 import { clearCart } from "@/utils/cart"
 
-export default function CheckoutForm({ productos }) {
+export default function CheckoutForm() {
   const router = useRouter()
 
   const [form, setForm] = useState({
@@ -34,11 +34,14 @@ export default function CheckoutForm({ productos }) {
       responsableId = storedUser ? JSON.parse(storedUser).id : null
     }
 
+    // Recuperar carrito desde localStorage
+    const cart = JSON.parse(localStorage.getItem("cart") || "[]")
+
     try {
       const res = await fetch("/api/checkout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ form, productos, responsableId }),
+        body: JSON.stringify({ form, productos: cart, responsableId }),
       })
 
       const data = await res.json()
@@ -48,11 +51,12 @@ export default function CheckoutForm({ productos }) {
 
         // Guardar datos para la página de confirmación
         localStorage.setItem("checkoutForm", JSON.stringify(form))
-        localStorage.setItem("cart", JSON.stringify(productos))
+        localStorage.setItem("cart", JSON.stringify(cart))
 
-        
         // Redirigir a confirmación con el ID del movimiento
         router.push(`/dashboard/confirmacion?pedidoId=${data.movimientoId}`)
+
+        // Limpiar carrito
         clearCart()
       } else {
         toast.error(data.error || "Error al confirmar el pedido")
@@ -70,114 +74,27 @@ export default function CheckoutForm({ productos }) {
       <h2 className="text-xl font-bold">Finalizar Compra</h2>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <input
-          name="email"
-          placeholder="Correo Electrónico *"
-          value={form.email}
-          onChange={handleChange}
-          required
-          className="input"
-        />
-        <input
-          name="telefono"
-          placeholder="Teléfono *"
-          value={form.telefono}
-          onChange={handleChange}
-          required
-          className="input"
-        />
-        <input
-          name="nombre"
-          placeholder="Nombre *"
-          value={form.nombre}
-          onChange={handleChange}
-          required
-          className="input"
-        />
-        <input
-          name="apellido"
-          placeholder="Apellido *"
-          value={form.apellido}
-          onChange={handleChange}
-          required
-          className="input"
-        />
+        <input name="email" placeholder="Correo Electrónico *" value={form.email} onChange={handleChange} required className="input" />
+        <input name="telefono" placeholder="Teléfono *" value={form.telefono} onChange={handleChange} required className="input" />
+        <input name="nombre" placeholder="Nombre *" value={form.nombre} onChange={handleChange} required className="input" />
+        <input name="apellido" placeholder="Apellido *" value={form.apellido} onChange={handleChange} required className="input" />
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <input
-          name="direccion"
-          placeholder="Dirección *"
-          value={form.direccion}
-          onChange={handleChange}
-          required
-          className="input"
-        />
-        <input
-          name="ciudad"
-          placeholder="Ciudad *"
-          value={form.ciudad}
-          onChange={handleChange}
-          required
-          className="input"
-        />
-        <input
-          name="provincia"
-          placeholder="Provincia *"
-          value={form.provincia}
-          onChange={handleChange}
-          required
-          className="input"
-        />
-        <input
-          name="postal"
-          placeholder="Código Postal *"
-          value={form.postal}
-          onChange={handleChange}
-          required
-          className="input"
-        />
+        <input name="direccion" placeholder="Dirección *" value={form.direccion} onChange={handleChange} required className="input" />
+        <input name="ciudad" placeholder="Ciudad *" value={form.ciudad} onChange={handleChange} required className="input" />
+        <input name="provincia" placeholder="Provincia *" value={form.provincia} onChange={handleChange} required className="input" />
+        <input name="postal" placeholder="Código Postal *" value={form.postal} onChange={handleChange} required className="input" />
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <input
-          name="tarjeta"
-          placeholder="Número de Tarjeta *"
-          value={form.tarjeta}
-          onChange={handleChange}
-          required
-          className="input"
-        />
-        <input
-          name="titular"
-          placeholder="Nombre en la Tarjeta *"
-          value={form.titular}
-          onChange={handleChange}
-          required
-          className="input"
-        />
-        <input
-          name="vencimiento"
-          placeholder="Vencimiento (MM/AA) *"
-          value={form.vencimiento}
-          onChange={handleChange}
-          required
-          className="input"
-        />
-        <input
-          name="cvv"
-          placeholder="CVV *"
-          value={form.cvv}
-          onChange={handleChange}
-          required
-          className="input"
-        />
+        <input name="tarjeta" placeholder="Número de Tarjeta *" value={form.tarjeta} onChange={handleChange} required className="input" />
+        <input name="titular" placeholder="Nombre en la Tarjeta *" value={form.titular} onChange={handleChange} required className="input" />
+        <input name="vencimiento" placeholder="Vencimiento (MM/AA) *" value={form.vencimiento} onChange={handleChange} required className="input" />
+        <input name="cvv" placeholder="CVV *" value={form.cvv} onChange={handleChange} required className="input" />
       </div>
 
-      <button
-        type="submit"
-        className="w-full bg-green-600 text-white py-2 rounded hover:bg-green-700 transition"
-      >
+      <button type="submit" className="w-full bg-green-600 text-white py-2 rounded hover:bg-green-700 transition">
         Confirmar Pedido
       </button>
 
