@@ -11,11 +11,8 @@ export default function App({ Component, pageProps }: AppProps) {
     return <Component {...pageProps} />
   }
 
-  // Todas las demás páginas se renderizan con Layout (que ya incluye AppSidebar)
   return (
-    <Layout>
-      <Component {...pageProps} />
-    </Layout>
+    <Component {...pageProps} />
   )
 }
 
