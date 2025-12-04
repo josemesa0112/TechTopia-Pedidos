@@ -11,6 +11,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       include: {
         creador: true, // incluir datos del usuario creador si la relación está definida
       },
+      orderBy: {
+        id: "desc",   // opcional: ordena del más reciente al más antiguo
+      },
     })
     console.log("Maestros obtenidos:", maestros) 
     return res.status(200).json(maestros)

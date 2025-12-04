@@ -196,6 +196,8 @@ export default function TransaccionesPage() {
           <tr className="bg-gray-200">
             <th className="p-2 border">ID</th>
             <th className="p-2 border">Fecha</th>
+            <th className="p-2 border">Tipo</th>
+            <th className="p-2 border">Maestro</th>
             <th className="p-2 border">Cantidad</th>
             <th className="p-2 border">Responsable</th>
           </tr>
@@ -205,8 +207,16 @@ export default function TransaccionesPage() {
             <tr key={mov.id} className="hover:bg-gray-100 transition">
               <td className="p-2 border">{mov.id}</td>
               <td className="p-2 border">
-                {new Date(mov.createdAt).toLocaleDateString()}
+                {new Date(mov.createdAt).toLocaleDateString("es-CO", {
+                  day: "2-digit",
+                  month: "2-digit",
+                  year: "numeric",
+                  hour: "2-digit",
+                  minute: "2-digit",
+                })}
               </td>
+              <td className="p-2 border">{mov.tipo}</td>
+              <td className="p-2 border">{mov.maestro?.nombre || "Sin maestro"}</td>
               <td className="p-2 border">{mov.cantidad}</td>
               <td className="p-2 border">
                 {mov.responsable?.name || mov.responsable?.email || "Sin datos"}
@@ -215,6 +225,7 @@ export default function TransaccionesPage() {
           ))}
         </tbody>
       </table>
+
 
       {movimientos.length > 0 && (
         <div className="bg-white p-4 rounded shadow-md">
