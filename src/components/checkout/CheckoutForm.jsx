@@ -50,10 +50,10 @@ export default function CheckoutForm({ productos }) {
         localStorage.setItem("checkoutForm", JSON.stringify(form))
         localStorage.setItem("cart", JSON.stringify(productos))
 
-        clearCart()
-
+        
         // Redirigir a confirmación con el ID del movimiento
         router.push(`/dashboard/confirmacion?pedidoId=${data.movimientoId}`)
+        clearCart()
       } else {
         toast.error(data.error || "Error al confirmar el pedido")
       }
