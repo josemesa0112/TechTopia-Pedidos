@@ -1,40 +1,106 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/pages/api-reference/create-next-app).
+TechTopia - Pedidos
 
-## Getting Started
+Sistema de gestión de compras y pedidos para la plataforma TechTopia. Este proyecto permite a los usuarios explorar productos, agregar al carrito, realizar pagos simulados y visualizar la confirmación del pedido. Además, incluye paneles administrativos para gestionar usuarios, maestros y transacciones.
 
-First, run the development server:
+🚀 Despliegue
 
-```bash
+URL del proyecto:https://nombreEquipo-Pedidos.vercel.app
+
+Integrantes del equipo
+
+Jose David Mesa Roldan 1044986033
+
+Usuarios de prueba
+
+Administrador
+Correo: admin@techtopia.com
+Contraseña: admin123
+
+Usuario
+Correo: usuario@techtopia.com
+Contraseña: usuario123
+
+Funcionalidades principales
+
+Catálogo de productos
+
+Filtros por categoría, stock y precio
+
+Ordenamiento por relevancia, precio y rating
+
+Agregar productos al carrito
+
+Carrito de compras
+
+Visualización persistente con localStorage
+
+Botón flotante para acceso rápido
+
+Checkout
+
+Formulario con validación de datos personales y tarjeta
+
+Simulación de pago y confirmación
+
+Registro del movimiento en base de datos
+
+Confirmación de pedido
+
+Página con resumen del pedido, dirección de envío y totales
+
+Botones para imprimir, seguir comprando o volver al inicio
+
+Panel administrativo
+
+Gestión de usuarios, maestros y transacciones
+
+Visualización de saldos y movimientos
+
+Acceso condicional según rol (ADMIN / USER)
+
+Tecnologías utilizadas
+
+Next.js (frontend y backend)
+
+Prisma (ORM para base de datos)
+
+Railway (base de datos PostgreSQL)
+
+Tailwind CSS (estilos)
+
+Vercel (despliegue)
+
+⚙️ Cómo ejecutar el proyecto
+
+Clonar el repositorio:
+
+git clone https://github.com/josemesa0112/TechTopia-Pedidos.git
+
+Instalar dependencias:
+
+npm install
+
+Configurar variables de entorno:
+
+DATABASE_URL="postgresql://postgres:XTyUZcChXOBUflllakcSQyRUHGVVVqzX@shinkansen.proxy.rlwy.net:30172/railway"
+
+Ejecutar migraciones:
+
+npx prisma migrate dev --name init
+
+Iniciar el servidor:
+
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Documentación interna
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+El código incluye comentarios explicativos en:
 
-[API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+CheckoutForm.jsx: lógica de envío y redirección
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) instead of React pages.
+confirmacion.tsx: renderizado condicional y lectura de datos
 
-This project uses [`next/font`](https://nextjs.org/docs/pages/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+api/checkout.js: inserción de movimiento en la base de datos
 
-## Learn More
+utils/cart.js: persistencia del carrito
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn-pages-router) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/pages/building-your-application/deploying) for more details.
