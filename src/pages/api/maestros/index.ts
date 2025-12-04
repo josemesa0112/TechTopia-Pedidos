@@ -12,7 +12,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         creador: true, // incluir datos del usuario creador si la relación está definida
       },
       orderBy: {
-        id: "desc",   // opcional: ordena del más reciente al más antiguo
+        id: "asc",   // opcional: ordena del más reciente al más antiguo
       },
     })
     console.log("Maestros obtenidos:", maestros) 

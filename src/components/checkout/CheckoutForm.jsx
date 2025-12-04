@@ -45,9 +45,16 @@ export default function CheckoutForm({ productos }) {
 
       if (res.ok) {
         toast.success("Pedido confirmado 🎉")
+
+        // Guardar datos para la página de confirmación
+        localStorage.setItem("checkoutForm", JSON.stringify(form))
+        localStorage.setItem("cart", JSON.stringify(productos))
+
         clearCart()
-        router.push("/dashboard/transacciones")
-      } else {
+
+        // Redirigir a confirmación con el ID del movimiento
+        router.push(`/dashboard/confirmacion?pedidoId=${data.movimientoId}`)
+    } else {
         toast.error(data.error || "Error al confirmar el pedido")
       }
     } catch {
