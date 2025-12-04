@@ -19,10 +19,12 @@ export default function ConfirmacionPage() {
     }
   }, [router.isReady])
 
-  if (!isReady || !form || !productos.length) {
+  if (!isReady) {
     return (
       <Layout>
-        <div className="text-center py-20 text-gray-500">Cargando confirmación del pedido...</div>
+        <div className="text-center py-20 text-gray-500">
+          Cargando confirmación del pedido...
+        </div>
       </Layout>
     )
   }
@@ -35,7 +37,7 @@ export default function ConfirmacionPage() {
     minute: "2-digit",
   })
 
-  const subtotal = productos.reduce((acc, p) => acc + p.precio, 0)
+  const subtotal = productos.reduce((acc, p) => acc + (p.precio || 0), 0)
   const iva = subtotal * 0.21
   const envio = 0
   const totalFinal = subtotal + iva + envio
@@ -46,30 +48,40 @@ export default function ConfirmacionPage() {
         <h1 className="text-2xl font-bold text-green-600 mb-4">¡Pedido Confirmado!</h1>
         <p className="mb-6">Gracias por tu compra. Tu pedido ha sido recibido.</p>
 
+        {/* Información del pedido */}
         <div className="mb-4">
-          <p><strong>Número de pedido:</strong> #{pedidoId}</p>
+          <p><strong>Número de pedido:</strong> #{pedidoId || "N/A"}</p>
           <p><strong>Fecha:</strong> {fecha}</p>
           <p><strong>Estado:</strong> Procesando</p>
         </div>
 
-        <div className="mb-4">
-          <h2 className="font-bold mb-2">Dirección de Envío</h2>
-          <p>{form.nombre} {form.apellido}</p>
-          <p>{form.direccion}</p>
-          <p>{form.ciudad}, {form.provincia} {form.postal}</p>
-          <p>Tel: {form.telefono}</p>
-        </div>
+        {/* Dirección de envío */}
+        {form && (
+          <div className="mb-4">
+            <h2 className="font-bold mb-2">Dirección de Envío</h2>
+            <p>{form.nombre} {form.apellido}</p>
+            <p>{form.direccion}</p>
+            <p>{form.ciudad}, {form.provincia} {form.postal}</p>
+            <p>Tel: {form.telefono}</p>
+          </div>
+        )}
 
+        {/* Productos */}
         <div className="mb-4">
           <h2 className="font-bold mb-2">Productos</h2>
-          {productos.map((p, i) => (
-            <div key={i} className="flex justify-between border-b py-2">
-              <span>{p.nombre} x 1</span>
-              <span>${p.precio.toFixed(2)}</span>
-            </div>
-          ))}
+          {productos.length > 0 ? (
+            productos.map((p, i) => (
+              <div key={i} className="flex justify-between border-b py-2">
+                <span>{p.nombre} x 1</span>
+                <span>${p.precio?.toFixed(2)}</span>
+              </div>
+            ))
+          ) : (
+            <p className="text-gray-500">No se encontraron productos</p>
+          )}
         </div>
 
+        {/* Totales */}
         <div className="text-sm text-gray-700 space-y-1 mb-6">
           <div className="flex justify-between"><span>Subtotal:</span><span>${subtotal.toFixed(2)}</span></div>
           <div className="flex justify-between"><span>IVA (21%):</span><span>${iva.toFixed(2)}</span></div>
@@ -80,12 +92,29 @@ export default function ConfirmacionPage() {
           </div>
         </div>
 
+        {/* Botones de acción */}
         <div className="flex gap-3">
-          <button onClick={() => window.print()} className="bg-gray-300 px-4 py-2 rounded hover:bg-gray-400">Imprimir</button>
-          <button onClick={() => router.push("/dashboard/productos")} className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Continuar Comprando</button>
-          <button onClick={() => router.push("/dashboard")} className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">Volver al Inicio</button>
+          <button
+            onClick={() => window.print()}
+            className="bg-gray-300 px-4 py-2 rounded hover:bg-gray-400"
+          >
+            Imprimir
+          </button>
+          <button
+            onClick={() => router.push("/dashboard/productos")}
+            className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+          >
+            Continuar Comprando
+          </button>
+          <button
+            onClick={() => router.push("/dashboard")}
+            className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
+          >
+            Volver al Inicio
+          </button>
         </div>
       </div>
     </Layout>
   )
 }
+
