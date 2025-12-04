@@ -54,7 +54,7 @@ export default function CheckoutForm({ productos }) {
 
         // Redirigir a confirmación con el ID del movimiento
         router.push(`/dashboard/confirmacion?pedidoId=${data.movimientoId}`)
-    } else {
+      } else {
         toast.error(data.error || "Error al confirmar el pedido")
       }
     } catch {
@@ -63,31 +63,121 @@ export default function CheckoutForm({ productos }) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="bg-white rounded-lg shadow-md p-6 space-y-6">
+    <form
+      onSubmit={handleSubmit}
+      className="bg-white rounded-lg shadow-md p-6 space-y-6"
+    >
       <h2 className="text-xl font-bold">Finalizar Compra</h2>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <input name="email" placeholder="Correo Electrónico *" value={form.email} onChange={handleChange} required className="input" />
-        <input name="telefono" placeholder="Teléfono *" value={form.telefono} onChange={handleChange} required className="input" />
-        <input name="nombre" placeholder="Nombre *" value={form.nombre} onChange={handleChange} required className="input" />
-        <input name="apellido" placeholder="Apellido *" value={form.apellido} onChange={handleChange} required className="input" />
+        <input
+          name="email"
+          placeholder="Correo Electrónico *"
+          value={form.email}
+          onChange={handleChange}
+          required
+          className="input"
+        />
+        <input
+          name="telefono"
+          placeholder="Teléfono *"
+          value={form.telefono}
+          onChange={handleChange}
+          required
+          className="input"
+        />
+        <input
+          name="nombre"
+          placeholder="Nombre *"
+          value={form.nombre}
+          onChange={handleChange}
+          required
+          className="input"
+        />
+        <input
+          name="apellido"
+          placeholder="Apellido *"
+          value={form.apellido}
+          onChange={handleChange}
+          required
+          className="input"
+        />
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <input name="direccion" placeholder="Dirección *" value={form.direccion} onChange={handleChange} required className="input" />
-        <input name="ciudad" placeholder="Ciudad *" value={form.ciudad} onChange={handleChange} required className="input" />
-        <input name="provincia" placeholder="Provincia *" value={form.provincia} onChange={handleChange} required className="input" />
-        <input name="postal" placeholder="Código Postal *" value={form.postal} onChange={handleChange} required className="input" />
+        <input
+          name="direccion"
+          placeholder="Dirección *"
+          value={form.direccion}
+          onChange={handleChange}
+          required
+          className="input"
+        />
+        <input
+          name="ciudad"
+          placeholder="Ciudad *"
+          value={form.ciudad}
+          onChange={handleChange}
+          required
+          className="input"
+        />
+        <input
+          name="provincia"
+          placeholder="Provincia *"
+          value={form.provincia}
+          onChange={handleChange}
+          required
+          className="input"
+        />
+        <input
+          name="postal"
+          placeholder="Código Postal *"
+          value={form.postal}
+          onChange={handleChange}
+          required
+          className="input"
+        />
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <input name="tarjeta" placeholder="Número de Tarjeta *" value={form.tarjeta} onChange={handleChange} required className="input" />
-        <input name="titular" placeholder="Nombre en la Tarjeta *" value={form.titular} onChange={handleChange} required className="input" />
-        <input name="vencimiento" placeholder="Vencimiento (MM/AA) *" value={form.vencimiento} onChange={handleChange} required className="input" />
-        <input name="cvv" placeholder="CVV *" value={form.cvv} onChange={handleChange} required className="input" />
+        <input
+          name="tarjeta"
+          placeholder="Número de Tarjeta *"
+          value={form.tarjeta}
+          onChange={handleChange}
+          required
+          className="input"
+        />
+        <input
+          name="titular"
+          placeholder="Nombre en la Tarjeta *"
+          value={form.titular}
+          onChange={handleChange}
+          required
+          className="input"
+        />
+        <input
+          name="vencimiento"
+          placeholder="Vencimiento (MM/AA) *"
+          value={form.vencimiento}
+          onChange={handleChange}
+          required
+          className="input"
+        />
+        <input
+          name="cvv"
+          placeholder="CVV *"
+          value={form.cvv}
+          onChange={handleChange}
+          required
+          className="input"
+        />
       </div>
 
-      <button type="submit" className="w-full bg-green-600 text-white py-2 rounded hover:bg-green-700 transition">
+      <button
+        type="submit"
+        className="w-full bg-green-600 text-white py-2 rounded hover:bg-green-700 transition"
+      >
         Confirmar Pedido
       </button>
 
